@@ -52,7 +52,14 @@ public class FlightReader {
 
             //7. opgave
             Map<String, Double> totalPerAirline = FlightServices.totalFlightTimeForAll(flightInfoDTOList);
-            totalPerAirline.forEach((key, value) -> System.out.printf("Total flightime for %s: %.2f minutes%n", key, value));
+            //totalPerAirline.forEach((key, value) -> System.out.printf("Total flightime for %s: %.2f minutes%n", key, value));
+
+            //8. opgave
+            List<FlightInfoDTO> sortedByDuration = FlightServices.flightsSortedByDuration(flightInfoDTOList);
+            sortedByDuration.forEach(f ->
+                    System.out.printf("%s → %s (%d min)%n", f.getOrigin(), f.getDestination(), f.getDuration().toMinutes())
+            );
+
 
         } catch (IOException e) {
             e.printStackTrace();

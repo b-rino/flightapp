@@ -40,7 +40,12 @@ public class FlightReader {
             //4. opgave
             LocalTime departureTime = LocalTime.of(1,0);
             List<FlightInfoDTO> earlyFlights = Flightservices.flightsDepartingBefore(flightInfoDTOList, departureTime);
-            earlyFlights.forEach(System.out::println);
+            //earlyFlights.forEach(System.out::println);
+
+            //5. opgave
+            Map<String, Double> airlineAvg = Flightservices.getAverageFlightTimeForAll(flightInfoDTOList);
+            airlineAvg.forEach((key, value) -> System.out.printf("Average flightime for %s: %.2f minutes%n", key, value));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

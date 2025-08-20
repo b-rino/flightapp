@@ -35,4 +35,13 @@ public class Flightservices {
     public static List<FlightInfoDTO> flightsDepartingBefore(List<FlightInfoDTO> flightList, LocalTime departureTime) {
         return flightList.stream().filter(f -> f.getDeparture().toLocalTime().isBefore(departureTime)).collect(Collectors.toList());
     }
+
+    public static Map<String, Double> getAverageFlightTimeForAll(List<FlightInfoDTO> flightList) {
+        return flightList.stream().filter(f -> f.getAirline() != null).collect(Collectors.groupingBy(FlightInfoDTO::getAirline, Collectors.collectingAndThen(Collectors.toList(), list ->{
+            double totalMinutes = list.stream().mapToDouble(f -> f.getDuration().toMinutes()).sum();
+            return totalMinutes / list.size();
+        }
+        ) ));
+    }
+
 }

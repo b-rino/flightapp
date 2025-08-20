@@ -3,6 +3,7 @@ package dk.cphbusiness.flightdemo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.cphbusiness.flightdemo.dtos.FlightDTO;
 import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
+import dk.cphbusiness.flightdemo.services.Flightservices;
 import dk.cphbusiness.utils.Utils;
 
 import java.io.IOException;
@@ -20,9 +21,16 @@ public class FlightReader {
 
     public static void main(String[] args) {
         try {
+            //pre-made
             List<FlightDTO> flightList = getFlightsFromFile("flights.json");
             List<FlightInfoDTO> flightInfoDTOList = getFlightInfoDetails(flightList);
-            flightInfoDTOList.forEach(System.out::println);
+            //flightInfoDTOList.forEach(System.out::println);
+
+            //1. opgave
+            System.out.println(Flightservices.getTotalTimeByAirline(flightInfoDTOList, "LUFTHANSA"));
+
+            //2. opgave
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,25 +50,25 @@ public class FlightReader {
 
     public static List<FlightInfoDTO> getFlightInfoDetails(List<FlightDTO> flightList) {
         List<FlightInfoDTO> flightInfoList = flightList.stream()
-           .map(flight -> {
-                LocalDateTime departure = flight.getDeparture().getScheduled();
-                LocalDateTime arrival = flight.getArrival().getScheduled();
-                Duration duration = Duration.between(departure, arrival);
-                FlightInfoDTO flightInfo =
-                        FlightInfoDTO.builder()
-                            .name(flight.getFlight().getNumber())
-                            .iata(flight.getFlight().getIata())
-                            .airline(flight.getAirline().getName())
-                            .duration(duration)
-                            .departure(departure)
-                            .arrival(arrival)
-                            .origin(flight.getDeparture().getAirport())
-                            .destination(flight.getArrival().getAirport())
-                            .build();
+                .map(flight -> {
+                    LocalDateTime departure = flight.getDeparture().getScheduled();
+                    LocalDateTime arrival = flight.getArrival().getScheduled();
+                    Duration duration = Duration.between(departure, arrival);
+                    FlightInfoDTO flightInfo =
+                            FlightInfoDTO.builder()
+                                    .name(flight.getFlight().getNumber())
+                                    .iata(flight.getFlight().getIata())
+                                    .airline(flight.getAirline().getName())
+                                    .duration(duration)
+                                    .departure(departure)
+                                    .arrival(arrival)
+                                    .origin(flight.getDeparture().getAirport())
+                                    .destination(flight.getArrival().getAirport())
+                                    .build();
 
-                return flightInfo;
-            })
-        .toList();
+                    return flightInfo;
+                })
+                .toList();
         return flightInfoList;
     }
 

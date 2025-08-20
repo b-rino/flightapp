@@ -33,7 +33,11 @@ public class FlightReader {
             System.out.println((Flightservices.getAverageFlightTimeByAirline(flightInfoDTOList, "LUFTHANSA")));
 
             //3. opgave
+            List<FlightInfoDTO> listBetween = Flightservices.flightBetweenAirports(flightInfoDTOList, "Abu Dhabi International", "Heathrow");
+            listBetween.forEach(f -> System.out.println(f.toString()));
 
+            //4. opgave
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

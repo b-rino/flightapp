@@ -6,6 +6,7 @@ import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Flightservices {
 
@@ -24,6 +25,10 @@ public class Flightservices {
         Map<String, Double> averageFlightTime = new HashMap<>();
         averageFlightTime.put(airline, avgTime);
         return averageFlightTime;
+    }
+
+    public static List<FlightInfoDTO> flightBetweenAirports(List<FlightInfoDTO> flightList, String origin, String destination) {
+        return flightList.stream().filter(f -> f.getOrigin() != null && f.getDestination() != null).filter(flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)).collect(Collectors.toList());
     }
 
 

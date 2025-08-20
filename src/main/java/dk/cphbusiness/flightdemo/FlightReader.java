@@ -30,6 +30,9 @@ public class FlightReader {
             System.out.println(Flightservices.getTotalTimeByAirline(flightInfoDTOList, "LUFTHANSA"));
 
             //2. opgave
+            System.out.println((Flightservices.getAverageFlightTimeByAirline(flightInfoDTOList, "LUFTHANSA")));
+
+            //3. opgave
             
         } catch (IOException e) {
             e.printStackTrace();

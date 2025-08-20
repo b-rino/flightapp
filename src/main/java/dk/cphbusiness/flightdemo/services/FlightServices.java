@@ -51,4 +51,8 @@ public class FlightServices {
     public static Map<String, Double> totalFlightTimeForAll(List<FlightInfoDTO> flightList) {
         return flightList.stream().filter(f -> f.getAirline() != null).collect(Collectors.groupingBy(FlightInfoDTO::getAirline, Collectors.summingDouble(f -> f.getDuration().toMinutes())));
     }
+
+    public static List<FlightInfoDTO> flightsSortedByDuration(List<FlightInfoDTO> flightList) {
+        return flightList.stream().filter(f -> f.getDuration() != null).sorted(Comparator.comparing(FlightInfoDTO::getDuration)).toList();
+    }
 }

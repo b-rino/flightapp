@@ -41,6 +41,10 @@ public class FlightReader {
             LocalTime departureTime = LocalTime.of(1,0);
             List<FlightInfoDTO> earlyFlights = Flightservices.flightsDepartingBefore(flightInfoDTOList, departureTime);
             earlyFlights.forEach(System.out::println);
+
+            //5. opgave
+            
+
         } catch (IOException e) {
             e.printStackTrace();
         }

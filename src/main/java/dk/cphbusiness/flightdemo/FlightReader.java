@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -34,10 +35,12 @@ public class FlightReader {
 
             //3. opgave
             List<FlightInfoDTO> listBetween = Flightservices.flightBetweenAirports(flightInfoDTOList, "Abu Dhabi International", "Heathrow");
-            listBetween.forEach(f -> System.out.println(f.toString()));
+            //listBetween.forEach(f -> System.out.println(f.toString()));
 
             //4. opgave
-            
+            LocalTime departureTime = LocalTime.of(1,0);
+            List<FlightInfoDTO> earlyFlights = Flightservices.flightsDepartingBefore(flightInfoDTOList, departureTime);
+            earlyFlights.forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }

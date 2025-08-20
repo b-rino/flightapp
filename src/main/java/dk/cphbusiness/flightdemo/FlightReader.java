@@ -3,7 +3,7 @@ package dk.cphbusiness.flightdemo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.cphbusiness.flightdemo.dtos.FlightDTO;
 import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
-import dk.cphbusiness.flightdemo.services.Flightservices;
+import dk.cphbusiness.flightdemo.services.FlightServices;
 import dk.cphbusiness.utils.Utils;
 
 import java.io.IOException;
@@ -28,23 +28,31 @@ public class FlightReader {
             //flightInfoDTOList.forEach(System.out::println);
 
             //1. opgave
-            System.out.println(Flightservices.getTotalTimeByAirline(flightInfoDTOList, "LUFTHANSA"));
+            System.out.println(FlightServices.getTotalTimeByAirline(flightInfoDTOList, "LUFTHANSA"));
 
             //2. opgave
-            System.out.println((Flightservices.getAverageFlightTimeByAirline(flightInfoDTOList, "LUFTHANSA")));
+            System.out.println((FlightServices.getAverageFlightTimeByAirline(flightInfoDTOList, "LUFTHANSA")));
 
             //3. opgave
-            List<FlightInfoDTO> listBetween = Flightservices.flightBetweenAirports(flightInfoDTOList, "Abu Dhabi International", "Heathrow");
+            List<FlightInfoDTO> listBetween = FlightServices.flightBetweenAirports(flightInfoDTOList, "Abu Dhabi International", "Heathrow");
             //listBetween.forEach(f -> System.out.println(f.toString()));
 
             //4. opgave
             LocalTime departureTime = LocalTime.of(1,0);
-            List<FlightInfoDTO> earlyFlights = Flightservices.flightsDepartingBefore(flightInfoDTOList, departureTime);
+            List<FlightInfoDTO> earlyFlights = FlightServices.flightsDepartingBefore(flightInfoDTOList, departureTime);
             //earlyFlights.forEach(System.out::println);
 
             //5. opgave
-            Map<String, Double> airlineAvg = Flightservices.getAverageFlightTimeForAll(flightInfoDTOList);
+            Map<String, Double> airlineAvg = FlightServices.getAverageFlightTimeForAll(flightInfoDTOList);
             airlineAvg.forEach((key, value) -> System.out.printf("Average flightime for %s: %.2f minutes%n", key, value));
+
+            //6. opgave
+            List<FlightInfoDTO> byArrivalTime = FlightServices.flightsSortedByArrival(flightInfoDTOList);
+            //byArrivalTime.forEach(System.out::println);
+
+            //7. opgave
+            Map<String, Double> totalPerAirline = FlightServices.totalFlightTimeForAll(flightInfoDTOList);
+            totalPerAirline.forEach((key, value) -> System.out.printf("Total flightime for %s: %.2f minutes%n", key, value));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,15 +1,15 @@
 package dk.cphbusiness.flightdemo.services;
 
-import dk.cphbusiness.flightdemo.dtos.FlightDTO;
 import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
 
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Flightservices {
+public class FlightServices {
 
     public static double getTotalTimeByAirline(List<FlightInfoDTO> flightList, String airline){
 
@@ -44,4 +44,11 @@ public class Flightservices {
         ) ));
     }
 
+    public static List<FlightInfoDTO> flightsSortedByArrival(List<FlightInfoDTO> flightList) {
+        return flightList.stream().filter(f -> f.getArrival() != null).sorted(Comparator.comparing(FlightInfoDTO::getArrival)).toList();
+    }
+
+    public static Map<String, Double> totalFlightTimeForAll(List<FlightInfoDTO> flightList) {
+        return flightList.stream().filter(f -> f.getAirline() != null).collect(Collectors.groupingBy(FlightInfoDTO::getAirline, Collectors.summingDouble(f -> f.getDuration().toMinutes())));
+    }
 }

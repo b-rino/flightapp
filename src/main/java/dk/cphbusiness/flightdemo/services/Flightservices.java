@@ -3,6 +3,7 @@ package dk.cphbusiness.flightdemo.services;
 import dk.cphbusiness.flightdemo.dtos.FlightDTO;
 import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +32,7 @@ public class Flightservices {
         return flightList.stream().filter(f -> f.getOrigin() != null && f.getDestination() != null).filter(flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)).collect(Collectors.toList());
     }
 
-
+    public static List<FlightInfoDTO> flightsDepartingBefore(List<FlightInfoDTO> flightList, LocalTime departureTime) {
+        return flightList.stream().filter(f -> f.getDeparture().toLocalTime().isBefore(departureTime)).collect(Collectors.toList());
+    }
 }

@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Purpose:
@@ -24,7 +25,11 @@ public class FlightReader {
         try {
             //pre-made
             List<FlightDTO> flightList = getFlightsFromFile("flights.json");
-            List<FlightInfoDTO> flightInfoDTOList = getFlightInfoDetails(flightList);
+            List<FlightInfoDTO> flightInfoDTOListBeforeFilter = getFlightInfoDetails(flightList);
+            //Filtrerer dubletter
+            List<FlightInfoDTO> flightInfoDTOList = flightInfoDTOListBeforeFilter.stream().distinct().collect(Collectors.toList());
+
+
             //flightInfoDTOList.forEach(System.out::println);
 
             //1. opgave
@@ -57,7 +62,7 @@ public class FlightReader {
             //8. opgave
             List<FlightInfoDTO> sortedByDuration = FlightServices.flightsSortedByDuration(flightInfoDTOList);
             sortedByDuration.forEach(f ->
-                    System.out.printf("%s → %s (%d min)%n", f.getOrigin(), f.getDestination(), f.getDuration().toMinutes())
+                    System.out.printf("Dep: %s → %s (%d min)%n", f.getOrigin(), f.getDestination(), f.getDuration().toMinutes())
             );
 
 

@@ -37,11 +37,7 @@ public class FlightServices {
     }
 
     public static Map<String, Double> getAverageFlightTimeForAll(List<FlightInfoDTO> flightList) {
-        return flightList.stream().filter(f -> f.getAirline() != null).collect(Collectors.groupingBy(FlightInfoDTO::getAirline, Collectors.collectingAndThen(Collectors.toList(), list ->{
-            double totalMinutes = list.stream().mapToDouble(f -> f.getDuration().toMinutes()).sum();
-            return totalMinutes / list.size();
-        }
-        ) ));
+        return flightList.stream().filter(f -> f.getAirline() != null).collect(Collectors.groupingBy(FlightInfoDTO::getAirline, Collectors.averagingDouble(f -> f.getDuration().toMinutes())));
     }
 
     public static List<FlightInfoDTO> flightsSortedByArrival(List<FlightInfoDTO> flightList) {
